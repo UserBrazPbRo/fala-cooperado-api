@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id          Int     @default(autoincrement()) @id
+  login       String  @unique
+  password    String
+  type        String
+  
+  @@map("user")
+}
+
+model Feedback {
+  id          Int      @default(autoincrement()) @id
+  reasonId    Int?
+  paId        Int?
+
+  code        String   @default(uuid()) 
+  title       String
+  feedback    String
+
+  response    String?
+  create_at   DateTime @default(now())
+
+  email       String?
+  cpf         String?
+ 
+  pa          Pa?      @relation(fields: [paId], references: [id])
+  reason      Reason?  @relation(fields: [reasonId], references: [id])
+
+  @@map("feedback")
+}
+
+model Reason {
+  id          Int     @default(autoincrement()) @id
+  group       String
+  description String 
+
+  Feedback Feedback[]
+  @@map("reason")
+}
+
+model Pa {  
+  id          Int     @default(autoincrement()) @id
+  description String
+
+  Feedback Feedback[]
+  @@map("pa")
+}
+
