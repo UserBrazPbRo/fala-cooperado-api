@@ -1,5 +1,4 @@
-name: CI Chat
-
+name: Fala cooperado
 on:
   push:
     branches:
