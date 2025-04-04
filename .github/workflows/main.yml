@@ -25,5 +25,5 @@ jobs:
           push: true
           file: Dockerfile
           tags: |
-            UserBrazPbRo/socket-io-chat:latest
-            UserBrazPbRo/socket-io-chat:v${{ github.run_number }}
+            friedrichmatheus/socket-io-chat:latest
+            friedrichmatheus/socket-io-chat:v${{ github.run_number }}
