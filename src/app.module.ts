@@ -10,6 +10,7 @@ import { PaModule } from './module/pa/pa.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './module/auth/auth.guard';
 import { JwtModule } from '@nestjs/jwt';
+import { InteractionModule } from './module/interaction/interaction.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { JwtModule } from '@nestjs/jwt';
     FeedbackModule,
     ReasonModule,
     PaModule,
+    InteractionModule,
     JwtModule,
   ],
   controllers: [AppController],

@@ -46,7 +46,7 @@ export class FeedbackController {
 
   @Get(':id')
   async getFeedbackById(@Param('id') id: number): Promise<Feedback | null> {
-    return this.feedbackService.getFeedbackById(id);
+    return this.feedbackService.getFeedbackById(Number(id));
   }
 
   @Put(':id')

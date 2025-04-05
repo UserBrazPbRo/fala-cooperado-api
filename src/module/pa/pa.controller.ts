@@ -22,7 +22,7 @@ export class PaController {
 
   @Get()
   @Public()
-  async getAllPas(): Promise<Pa[]> {
+  async getAllPas(@Param('paId') params: any): Promise<Pa[]> {
     return this.paService.getAllPas();
   }
 

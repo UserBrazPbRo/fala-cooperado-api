@@ -12,16 +12,24 @@ export class FeedbackService {
 
   async getFeedbackByCode(code: string): Promise<Feedback | null> {
     return this.prisma.feedback.findFirst({
+      include: { Interaction: true },
       where: { code },
     });
   }
 
   async getAllFeedbacks(): Promise<Feedback[]> {
-    return this.prisma.feedback.findMany();
+    return this.prisma.feedback.findMany({
+      include: { pa: true, reason: true },
+    });
   }
 
   async getFeedbackById(id: number): Promise<Feedback | null> {
-    return this.prisma.feedback.findUnique({ where: { id } });
+    const result = await this.prisma.feedback.findUnique({
+      include: { Interaction: true },
+      where: { id },
+    });
+
+    return result;
   }
 
   async updateFeedback(

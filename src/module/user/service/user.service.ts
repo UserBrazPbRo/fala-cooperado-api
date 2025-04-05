@@ -28,7 +28,9 @@ export class UserService {
 
   async getAllUsers() {
     this.logger.log('getAllUsers');
-    const users = await this.prisma.user.findMany();
+    const users = await this.prisma.$queryRawUnsafe<any[]>(
+      ' SELECT t1.*, t2.description FROM usuario t1 left join pa t2 on (t2.id = t1."paId")',
+    );
     return users;
   }
 

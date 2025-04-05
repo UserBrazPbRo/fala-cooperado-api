@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -19,8 +20,10 @@ model User {
   login       String  @unique
   password    String
   type        String
+  paId        Int?
   
-  @@map("user")
+  @@map("usuario")
+  Interaction Interaction[]
 }
 
 model Feedback {
@@ -28,11 +31,12 @@ model Feedback {
   reasonId    Int?
   paId        Int?
 
+  status      String   @default("PENDING")
+
   code        String   @default(uuid()) 
   title       String
   feedback    String
 
-  response    String?
   create_at   DateTime @default(now())
 
   email       String?
@@ -41,6 +45,7 @@ model Feedback {
   pa          Pa?      @relation(fields: [paId], references: [id])
   reason      Reason?  @relation(fields: [reasonId], references: [id])
 
+  Interaction Interaction[]
   @@map("feedback")
 }
 
@@ -51,6 +56,19 @@ model Reason {
 
   Feedback Feedback[]
   @@map("reason")
+}
+
+model Interaction {
+  id          Int     @default(autoincrement()) @id
+  interaction String
+  user        User?   @relation(fields: [userId], references: [id])
+  userId      Int?
+  feedbackId  Int?
+  feedback    Feedback?      @relation(fields: [feedbackId], references: [id])
+  
+  create_at   DateTime @default(now())
+
+   @@map("interaction")
 }
 
 model Pa {  

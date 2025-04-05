@@ -40,17 +40,16 @@ export class UserController {
   @Put(':id')
   async updateUser(
     @Param('id') id: number,
-    @Body() userData: { login: string; password: string; type: string },
+    @Body()
+    userData: { login: string; password: string; type: string; paId: number },
   ): Promise<UserModel> {
     return this.authService.update(id, {
-      login: userData.login,
       password: userData.password,
-      type: userData.type,
     });
   }
 
   @Delete(':id')
   async deleteUser(@Param('id') id: number): Promise<UserModel> {
-    return this.userService.deleteUser({ id: id });
+    return this.userService.deleteUser({ id: Number(id) });
   }
 }
