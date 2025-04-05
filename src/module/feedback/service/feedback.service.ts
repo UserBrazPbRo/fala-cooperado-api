@@ -17,6 +17,14 @@ export class FeedbackService {
     });
   }
 
+  async getAllFeedbacksByUserPaId(userId: number): Promise<Feedback[]> {
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    return this.prisma.feedback.findMany({
+      include: { pa: true, reason: true },
+      where: { paId: user?.paId },
+    });
+  }
+
   async getAllFeedbacks(): Promise<Feedback[]> {
     return this.prisma.feedback.findMany({
       include: { pa: true, reason: true },

@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Request,
 } from '@nestjs/common';
 import { FeedbackService } from './service/feedback.service';
 import { Feedback } from '@prisma/client';
@@ -32,8 +33,8 @@ export class FeedbackController {
   }
 
   @Get()
-  async getAllFeedbacks(): Promise<Feedback[]> {
-    return this.feedbackService.getAllFeedbacks();
+  async getAllFeedbacks(@Request() req): Promise<Feedback[]> {
+    return this.feedbackService.getAllFeedbacksByUserPaId(Number(req.user.sub));
   }
 
   @Get('code/:code')
